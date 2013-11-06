@@ -12,19 +12,27 @@ ConversionGrayscale::ConversionGrayscale(PNM* img, ImageViewer* iv) :
 
 PNM* ConversionGrayscale::transform()
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
 
-    int width = image->width();
+    int width  = image->width();
     int height = image->height();
 
-    PNM* newImage = new PNM(width, height, QImage::Format_Indexed8);
+	PNM* newImage = new PNM(width, height, QImage::Format_Indexed8);
 
     if (image->format() == QImage::Format_Mono)
     {
-
     }
-    else // if (image->format() == QImage::Format_RGB32)
+    else //if (image->format() == QImage::Format_RGB32)
     {
+		// Iterate over image space
+        for (int x=0; x<width; x++)
+            for (int y=0; y<height; y++)
+            {
+                QRgb pixel = image->pixel(x,y); // Getting the pixel(x,y) value
+
+                int v = 0.3*qRed(pixel)+0.6*qGreen(pixel)+0.1*qBlue(pixel);    // Get the 0-255 value of the L channel
+
+                newImage->setPixel(x,y, v);
+            }
 
     }
 
