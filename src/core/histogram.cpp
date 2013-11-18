@@ -24,15 +24,80 @@ Histogram::~Histogram()
 
 void Histogram::generate(QImage* image)
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+
+	// Getting the dimensions
+    int width  = image->width();
+    int height = image->height();
+
+	// Iterate over image space
+    for (int x=0; x<width; x++) {
+        for (int y=0; y<height; y++)
+        {
+            QRgb pixel = image->pixel(x,y); // Getting the pixel(x,y) value
+
+            int r = qRed(pixel);    // Get the 0-255 value of the R channel
+            int g = qGreen(pixel);  // Get the 0-255 value of the G channel
+            int b = qBlue(pixel);   // Get the 0-255 value of the B channel
+			int l = qGray(pixel);    // Get the 0-255 value of the L channel
+
+			if (Histogram::get(RChannel)->contains(r)) {
+				int value = Histogram::get(RChannel)->value(r);
+				Histogram::get(RChannel)->insert (r, value+1);
+			}
+			else {
+				Histogram::get(RChannel)->insert (r,1);
+			}
+			if (Histogram::get(GChannel)->contains(g)) {
+				int value = Histogram::get(GChannel)->value(g);
+				Histogram::get(GChannel)->insert (g, value+1);
+			}
+			else {
+				Histogram::get(GChannel)->insert (g,1);
+			}
+			if (Histogram::get(BChannel)->contains(b)) {
+				int value = Histogram::get(BChannel)->value(b);
+				Histogram::get(BChannel)->insert (b, value+1);
+			}
+			else {
+				Histogram::get(BChannel)->insert (b,1);
+			}
+			if (Histogram::get(LChannel)->contains(l)) {
+				int value = Histogram::get(LChannel)->value(l);
+				Histogram::get(LChannel)->insert (l, value+1);
+			}
+			else {
+				Histogram::get(LChannel)->insert (l,1);
+			}
+        }
+	}
 }
 
 /** Returns the maximal value of the histogram in the given channel */
 int Histogram::maximumValue(Channel selectedChannel = RGB)
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
-
-    return 0;
+	QHash<int, int>::const_iterator i;
+	int aux=0;
+	for (i=Histogram::get(RChannel)->constBegin();i!=Histogram::get(RChannel)->constEnd();++i) {
+		if (i.value()>aux) {
+			aux=i.value();
+		}
+	}
+	for (i=Histogram::get(GChannel)->constBegin();i!=Histogram::get(GChannel)->constEnd();++i) {
+		if (i.value()>aux) {
+			aux=i.value();
+		}
+	}
+	for (i=Histogram::get(BChannel)->constBegin();i!=Histogram::get(BChannel)->constEnd();++i) {
+		if (i.value()>aux) {
+			aux=i.value();
+		}
+	}
+	for (i=Histogram::get(LChannel)->constBegin();i!=Histogram::get(LChannel)->constEnd();++i) {
+		if (i.value()>aux) {
+			aux=i.value();
+		}
+	}	
+    return aux;
 }
 
 

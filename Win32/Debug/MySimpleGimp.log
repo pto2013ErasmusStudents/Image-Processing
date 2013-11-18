@@ -1,9 +1,9 @@
-﻿Build started 05/11/2013 15:59:35.
+﻿Build started 18/11/2013 14:26:48.
      1>Project "J:\IP\MySimpleGimp.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(345,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
      1>ClCompile:
-         C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\software\qt\5.1.1\msvc2012\include\QtGui\5.1.1 /Isrc /Isrc\core /Isrc\gui /IC:\software\qt\5.1.1\msvc2012\include /IC:\software\qt\5.1.1\msvc2012\include\QtWidgets /IC:\software\qt\5.1.1\msvc2012\include\QtGui /IC:\software\qt\5.1.1\msvc2012\include\QtANGLE /IC:\software\qt\5.1.1\msvc2012\include\QtCore /Idebug /I. /I"C:\software\qt\5.1.1\msvc2012\mkspecs\win32-msvc2012" /I.\GeneratedFiles /Zi /nologo /W2 /WX- /Od /Oy- /D _WINDOWS /D UNICODE /D WIN32 /D QT_WIDGETS_LIB /D QT_GUI_LIB /D QT_CORE_LIB /D QT_OPENGL_ES_2 /D QT_OPENGL_ES_2_ANGLE /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"Win32\Debug\\" /Fd"Win32\Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt -Zm200 -w34100 -w34189 src\core\transformations\correction.cpp
-         correction.cpp
+         C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\software\qt\5.1.1\msvc2012\include\QtGui\5.1.1 /Isrc /Isrc\core /Isrc\gui /IC:\software\qt\5.1.1\msvc2012\include /IC:\software\qt\5.1.1\msvc2012\include\QtWidgets /IC:\software\qt\5.1.1\msvc2012\include\QtGui /IC:\software\qt\5.1.1\msvc2012\include\QtANGLE /IC:\software\qt\5.1.1\msvc2012\include\QtCore /Idebug /I. /I"C:\software\qt\5.1.1\msvc2012\mkspecs\win32-msvc2012" /I.\GeneratedFiles /Zi /nologo /W2 /WX- /Od /Oy- /D _WINDOWS /D UNICODE /D WIN32 /D QT_WIDGETS_LIB /D QT_GUI_LIB /D QT_CORE_LIB /D QT_OPENGL_ES_2 /D QT_OPENGL_ES_2_ANGLE /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"Win32\Debug\\" /Fd"Win32\Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt -Zm200 -w34100 -w34189 src\core\transformations\histogram_equalization.cpp
+         histogram_equalization.cpp
        Link:
          C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"debug\\MySimpleGimp.exe" /NOLOGO /LIBPATH:C:\software\qt\5.1.1\msvc2012\lib /LIBPATH:C:\software\qt\5.1.1\msvc2012\lib qtmaind.lib C:\software\qt\5.1.1\msvc2012\lib\Qt5Widgetsd.lib C:\software\qt\5.1.1\msvc2012\lib\Qt5Guid.lib C:\software\qt\5.1.1\msvc2012\lib\Qt5Cored.lib libEGLd.lib libGLESv2d.lib gdi32.lib user32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"debug\MySimpleGimp.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X86 /SAFESEH "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" Win32\Debug\moc_bin_niblack_dialog.obj
          Win32\Debug\moc_corner_harris_dialog.obj
@@ -94,4 +94,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:12.57
+Time Elapsed 00:00:14.37
