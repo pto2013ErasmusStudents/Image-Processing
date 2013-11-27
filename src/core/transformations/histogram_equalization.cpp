@@ -32,11 +32,11 @@ PNM* HistogramEqualization::transform()
 			i!=image->getHistogram()->get(Histogram::RChannel)->constEnd();++i) {
 		double r =i.value();
 		r/=totalPixels;
-		probR[i.key]= r;
+		probR[i.key()]= r;
 	}
 	double DR[256];
 	DR[0]=0;
-	for (j=0;j<255;++j) {
+	for (j=1;j<255;++j) {
 		DR[j]=DR[j-1]+probR[j];
 	}
 	double probG[256];
@@ -47,11 +47,11 @@ PNM* HistogramEqualization::transform()
 			i!=image->getHistogram()->get(Histogram::GChannel)->constEnd();++i) {
 		double g =i.value();
 		g/=totalPixels;
-		probG[i.key]= g;
+		probG[i.key()]= g;
 	}
 	double DG[256];
 	DG[0]=0;
-	for (j=0;j<255;++j) {
+	for (j=1;j<255;++j) {
 		DG[j]=DG[j-1]+probG[j];
 	}
 	double probB[256];
@@ -62,11 +62,11 @@ PNM* HistogramEqualization::transform()
 			i!=image->getHistogram()->get(Histogram::BChannel)->constEnd();++i) {
 		double b=i.value();
 		b/=totalPixels;
-		probB[i.key]= b;
+		probB[i.key()]= b;
 	}
 	double DB[256];
 	DB[0]=0;
-	for (j=0;j<255;++j) {
+	for (j=1;j<255;++j) {
 		DB[j]=DB[j-1]+probB[j];
 	}
 	double probL[256];
@@ -77,11 +77,11 @@ PNM* HistogramEqualization::transform()
 			i!=image->getHistogram()->get(Histogram::LChannel)->constEnd();++i) {
 		double l =i.value();
 		l/=totalPixels;
-		probL[i.key]= l;
+		probL[i.key()]= l;
 	}
 	double DL[256];
 	DL[0]=0;
-	for (j=0;j<255;++j) {
+	for (j=1;j<255;++j) {
 		DL[j]=DL[j-1]+probL[j];
 	}
 	if (image->format() == QImage::Format_Indexed8)
@@ -110,8 +110,8 @@ PNM* HistogramEqualization::transform()
 	            int b = qBlue(pixel);   // Get the 0-255 value of the B channel
 
 				int newR =DR[r]*255;
-				int newG =DR[g]*255;
-				int newB =DR[b]*255;
+				int newG =DG[g]*255;
+				int newB =DB[b]*255;
 
 				QColor newPixel = QColor(newR,newG,newB);
 				newImage->setPixel(x,y, newPixel.rgb());
@@ -122,4 +122,3 @@ PNM* HistogramEqualization::transform()
 
     return newImage;
 }
-

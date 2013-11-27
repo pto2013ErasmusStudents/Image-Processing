@@ -103,7 +103,55 @@ QRgb Transformation::getPixel(int x, int y, Mode mode)
  */
 QRgb Transformation::getPixelCyclic(int x, int y)
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+	int i, j;
+	double acumR=0, acumG=0, acumB=0, acumL=0;
+	for (i=-1;i=1;++i) {
+		for (j=-1;j=1;++j) {
+			int newX, newY;
+			if (x+i>=0 && x+i<image->width()) {
+				newX=x+i;
+			}
+			else {
+				if (x+i<0) {
+					newX=image->width();
+				}
+				else {
+					newX=0;
+				}
+			}
+			if (y+j>=0 && y+j<image->height()) {
+				newY=y+j;
+			}
+			else {
+				if (y+j<0) {
+					newY=image->height();
+				}
+				else {
+					newY=0;
+				}
+			}
+			QRgb pixel = image->pixel(newX,newY);
+			if (newX!=0 || newY!=0) {
+				acumR+=qRed(pixel)*0.1;
+				acumG+=qGreen(pixel)*0.1;
+				acumB+=qBlue(pixel)*0.1;
+				acumL+=qGray(pixel)*0.1;
+			}
+			else {
+				acumR+=qRed(pixel)*0.2;
+				acumG+=qGreen(pixel)*0.2;
+				acumB+=qBlue(pixel)*0.2;
+				acumL+=qGray(pixel)*0.2;
+			}
+		}
+	}
+	if (image->format() == QImage::Format_Indexed8) {
+		image->setPixel(x,y, acumL);
+	}
+	else {
+		QColor newPixel = QColor(acumR,acumG,acumB);
+		image->setPixel(x,y, newPixel.rgb());
+	}
 
     return image->pixel(x,y);
 }
@@ -138,8 +186,12 @@ math::matrix<double> Transformation::getWindow(int x, int y, int size,
 {
     math::matrix<double> window(size,size);
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
-
+		for (int x=0; x<image->width(); x++) {
+			for (int y=0; y<image->height(); y++)
+			{
+				Transformation::getPixel(x, y, CyclicEdge);
+			}
+		}
     return window;
 }
 
