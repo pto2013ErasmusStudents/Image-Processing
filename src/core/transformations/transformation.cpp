@@ -101,56 +101,19 @@ QRgb Transformation::getPixel(int x, int y, Mode mode)
 /** Returns a pixel using the Cyclic mode:
  *  pixel(x,y) = pixel(x%width, y%width);
  */
-QRgb Transformation::getPixelCyclic(int x, int y)
-{
-	int i, j;
-	double acumR=0, acumG=0, acumB=0, acumL=0;
-	for (i=-1;i=1;++i) {
-		for (j=-1;j=1;++j) {
-			int newX, newY;
-			if (x+i>=0 && x+i<image->width()) {
-				newX=x+i;
-			}
-			else {
-				if (x+i<0) {
-					newX=image->width();
-				}
-				else {
-					newX=0;
-				}
-			}
-			if (y+j>=0 && y+j<image->height()) {
-				newY=y+j;
-			}
-			else {
-				if (y+j<0) {
-					newY=image->height();
-				}
-				else {
-					newY=0;
-				}
-			}
-			QRgb pixel = image->pixel(newX,newY);
-			if (newX!=0 || newY!=0) {
-				acumR+=qRed(pixel)*0.1;
-				acumG+=qGreen(pixel)*0.1;
-				acumB+=qBlue(pixel)*0.1;
-				acumL+=qGray(pixel)*0.1;
-			}
-			else {
-				acumR+=qRed(pixel)*0.2;
-				acumG+=qGreen(pixel)*0.2;
-				acumB+=qBlue(pixel)*0.2;
-				acumL+=qGray(pixel)*0.2;
-			}
-		}
-	}
-	if (image->format() == QImage::Format_Indexed8) {
-		image->setPixel(x,y, acumL);
+QRgb Transformation::getPixelCyclic(int x, int y) {
+
+	if (x<0) {
+		x += image->width();
 	}
 	else {
-		QColor newPixel = QColor(acumR,acumG,acumB);
-		image->setPixel(x,y, newPixel.rgb());
+		x = x%image->width();
+	}
+	if (y<0) {
+		y += image->height();
+	}
+	else {
+		y = y%image->height();
 	}
 
     return image->pixel(x,y);
@@ -160,11 +123,12 @@ QRgb Transformation::getPixelCyclic(int x, int y)
   * Returns a given pixel
   * If the pixel is out of image boundaries Black is returned;
   */
-QRgb Transformation::getPixelNull(int x, int y)
-{
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+QRgb Transformation::getPixelNull(int x, int y) {
+	
+	x = x%image->width();
+	y = y%image->height();
 
-    return image->pixel(x,y);
+	return image->pixel(x,y);
 }
 
 /**
@@ -172,11 +136,10 @@ QRgb Transformation::getPixelNull(int x, int y)
   * If the pixel is out of image boundaries
   * the nearest edge pixel is given
   */
-QRgb Transformation::getPixelRepeat(int x, int y)
-{
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+QRgb Transformation::getPixelRepeat(int x, int y) {
 
-    return image->pixel(x,y);
+
+	return image->pixel(x,y);
 }
 
 /** Returns a size x size part of the image centered around (x,y) */
@@ -186,12 +149,32 @@ math::matrix<double> Transformation::getWindow(int x, int y, int size,
 {
     math::matrix<double> window(size,size);
 
-		for (int x=0; x<image->width(); x++) {
-			for (int y=0; y<image->height(); y++)
-			{
-				Transformation::getPixel(x, y, CyclicEdge);
+	int a=0, b=0;
+	for (int i=x-size/2; i<x+size/2; i++) {
+		b=0;
+		for (int j=y-size/2; j<y+size/2; j++) {
+			QRgb pixel;
+			if (i<0 || i>image->width() || j<0 || j>image->height()) {
+				pixel = getPixel(i, j, CyclicEdge);
 			}
+			else {
+				pixel = image->pixel(x,y); // Getting the pixel(x,y) value
+			}
+			int v;
+			//switch (channel) {
+			//	case RChannel:		v=qRed(pixel);
+			//	case GChannel:		v=qGreen(pixel);
+			//	case BChannel:		v=qBlue(pixel);
+			//	case LChannel:		v=qGray(pixel);
+			//	default:			v=0;
+			//}
+			v=qRed(pixel);
+			window(a,b)=v;
+			b++;
 		}
+		a++;
+	}
+
     return window;
 }
 

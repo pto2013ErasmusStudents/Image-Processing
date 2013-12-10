@@ -22,7 +22,17 @@ math::matrix<double> Convolution::getMask(int size, Mode mode = Normalize)
 {
     math::matrix<double> mask(size, size);
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+	int i,j;
+	for (i=0;i<size;++i) {
+		for (j=0;j<size;j++) {
+			if (i==size/2 && j==size/2) {
+				mask(i,j)=1;
+			}
+			else {
+				mask(i,j)=0;
+			}
+		}
+	}
 
     return mask;
 }
@@ -35,7 +45,81 @@ PNM* Convolution::convolute(math::matrix<double> mask, Mode mode = RepeatEdge)
 
     PNM* newImage = new PNM(width, height, image->format());
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+	if (image->format() == QImage::Format_Indexed8) {
+		for (int x=0; x<width; x++) {
+			for (int y=0; y<height; y++) {
+
+				double weight = sum(mask);
+				int size = mask.RowNo();
+			
+				QRgb pixel = image->pixel(x,y); // Getting the pixel(x,y) value
+
+				int l = qGray(pixel);   // Get the 0-255 value of the L channel
+
+				math::matrix<double> window = Transformation::getWindow(x,y, size, LChannel, mode);
+				math::matrix<double> accumulator = join(window, mask);
+				double sumAc = sum(accumulator);
+				if (weight!=0) {
+					sumAc/=weight;
+				}
+				if (sumAc >= 0 && sumAc <=255) {
+					l = sumAc;
+				}
+
+				newImage->setPixel(x,y, l);
+
+			}
+		}
+	}
+	else {
+		// Iterate over image space
+		for (int x=0; x<width; x++) {
+			for (int y=0; y<height; y++) {
+
+				double weight = sum(mask);
+				int size = mask.RowNo();
+			
+				QRgb pixel = image->pixel(x,y); // Getting the pixel(x,y) value
+				int r = qRed(pixel);    // Get the 0-255 value of the R channel
+				int g = qGreen(pixel);  // Get the 0-255 value of the G channel
+				int b = qBlue(pixel);   // Get the 0-255 value of the B channel
+
+				math::matrix<double> window = Transformation::getWindow(x,y, size, RChannel, mode);
+				math::matrix<double> accumulator = join(window, mask);
+				double sumAc = sum(accumulator);
+				if (weight!=0) {
+					sumAc/=weight;
+				}
+				if (sumAc >= 0 && sumAc <=255) {
+					r = sumAc;
+				}
+
+				window = Transformation::getWindow(x,y, size, GChannel, mode);
+				accumulator = join(window, mask);
+				sumAc = sum(accumulator);
+				if (weight!=0) {
+					sumAc/=weight;
+				}
+				if (sumAc >= 0 && sumAc <=255) {
+					g = sumAc;
+				}
+
+				window = Transformation::getWindow(x,y, size, BChannel, mode);
+				accumulator = join(window, mask);
+				sumAc = sum(accumulator);
+				if (weight!=0) {
+					sumAc/=weight;
+				}
+				if (sumAc >= 0 && sumAc <=255) {
+					b = sumAc;
+				}
+
+				QColor newPixel = QColor(r,g,b);
+				newImage->setPixel(x,y, newPixel.rgb());
+
+			}
+		}
+	}
 
     return newImage;
 }
@@ -48,7 +132,12 @@ const math::matrix<double> Convolution::join(math::matrix<double> A, math::matri
     int size = A.RowNo();
     math::matrix<double> C(size, size);
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+    int i,j;
+	for (i=0;i<size;++i) {
+		for (j=0;j<size;j++) {
+			C(i,j)=A(i,j)*B(i,j);
+		}
+	}
 
     return C;
 }
@@ -58,7 +147,13 @@ const double Convolution::sum(const math::matrix<double> A)
 {
     double sum = 0.0;
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+    int size = A.RowNo();
+    int i,j;
+	for (i=0;i<size;++i) {
+		for (j=0;j<size;j++) {
+			sum+=A(i,j);
+		}
+	}
 
     return sum;
 
