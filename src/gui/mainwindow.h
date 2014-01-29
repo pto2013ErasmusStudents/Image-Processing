@@ -3,7 +3,7 @@
 
 #define PROGRAM_NAME "PTO"
 #define PROGRAM_VER "1.3.37"
-#define DEFAULT_IMG "lenna_512x512.pnm"
+#define DEFAULT_IMG "lenna_154x154.pnm"
 
 #include <QMainWindow>
 #include <QDockWidget>

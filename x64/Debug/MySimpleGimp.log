@@ -1,0 +1,97 @@
+﻿Compilación iniciada a las 16/01/2014 21:32:25.
+     1>Proyecto "C:\Users\Marta\Documents\GitHub\Image-Processing\MySimpleGimp.vcxproj" en el nodo 2 (Build destinos).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(345,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\CL.exe /c /IC:\Qt\Qt5.1.1\5.1.1\msvc2012_64\include\QtGui\5.1.1 /IC:\Qt\Qt5.1.1\5.1.1\msvc2012_64\include /IC:\software\qt\5.1.1\msvc2012\include\QtGui\5.1.1 /Isrc /Isrc\core /Isrc\gui /IC:\Qt\Qt5.1.1\5.1.1\msvc2012_64\include\QtWidgets /IC:\Qt\Qt5.1.1\5.1.1\msvc2012_64\include\QtGui /IC:\Qt\Qt5.1.1\5.1.1\msvc2012_64\include\QtANGLE /IC:\Qt\Qt5.1.1\5.1.1\msvc2012_64\include\QtCore /Idebug /I. /I"C:\Qt\Qt5.1.1\5.1.1\msvc2012_64\mkspecs\win32-msvc2012" /I.\GeneratedFiles /Zi /nologo /W2 /WX- /Od /D _WINDOWS /D QT_CORE_LIB /D QT_GUI_LIB /D QT_OPENGL_ES_2 /D QT_OPENGL_ES_2_ANGLE /D QT_WIDGETS_LIB /D UNICODE /D UNICODE /D WIN32 /D WIN32 /D WIN64 /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"x64\Debug\\" /Fd"x64\Debug\vc110.pdb" /Gd /TP /errorReport:prompt -Zm200 -w34100 -w34189 src\core\transformations\bin_manual.cpp
+         bin_manual.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marta\Documents\GitHub\Image-Processing\x64\Debug\\MySimpleGimp.exe" /NOLOGO /LIBPATH:C:\Qt\Qt5.1.1\5.1.1\msvc2012_64\lib /LIBPATH:C:\Qt\Qt5.1.1\5.1.1\msvc2012_64\lib qtmaind.lib Qt5Widgetsd.lib Qt5Guid.lib Qt5Cored.lib libEGLd.lib libGLESv2d.lib gdi32.lib user32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marta\Documents\GitHub\Image-Processing\x64\Debug\MySimpleGimp.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /MACHINE:X64 "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"  /SUBSYSTEM:WINDOWS x64\Debug\moc_bin_niblack_dialog.obj
+         x64\Debug\moc_corner_harris_dialog.obj
+         x64\Debug\moc_correction_dialog.obj
+         x64\Debug\moc_edge_canny_dialog.obj
+         x64\Debug\moc_edge_zero_dialog.obj
+         x64\Debug\moc_gaussian_dialog.obj
+         x64\Debug\moc_histogramviewer.obj
+         x64\Debug\moc_hough_dialog.obj
+         x64\Debug\moc_hough_lines_dialog.obj
+         x64\Debug\moc_imageviewer.obj
+         x64\Debug\moc_linear_dialog.obj
+         x64\Debug\moc_mainwindow.obj
+         x64\Debug\moc_map_horizon_dialog.obj
+         x64\Debug\moc_map_normal_dialog.obj
+         x64\Debug\moc_mask_dialog.obj
+         x64\Debug\moc_morph_dialog.obj
+         x64\Debug\moc_noise_bilateral_dialog.obj
+         x64\Debug\moc_noise_median_dialog.obj
+         x64\Debug\moc_slider_dialog.obj
+         x64\Debug\moc_tools.obj
+         x64\Debug\moc_toolsmenu.obj
+         x64\Debug\moc_transformation.obj
+         x64\Debug\qrc_icons.obj
+         x64\Debug\bin_gradient.obj
+         x64\Debug\bin_iterbimodal.obj
+         x64\Debug\bin_manual.obj
+         x64\Debug\bin_niblack.obj
+         x64\Debug\bin_niblack_dialog.obj
+         x64\Debug\bin_otsu.obj
+         x64\Debug\blur_gaussian.obj
+         x64\Debug\blur_linear.obj
+         x64\Debug\blur_uniform.obj
+         x64\Debug\conversion_grayscale.obj
+         x64\Debug\convolution.obj
+         x64\Debug\corner_harris.obj
+         x64\Debug\corner_harris_dialog.obj
+         x64\Debug\correction.obj
+         x64\Debug\correction_dialog.obj
+         x64\Debug\edge_canny.obj
+         x64\Debug\edge_canny_dialog.obj
+         x64\Debug\edge_gradient.obj
+         x64\Debug\edge_laplacian.obj
+         x64\Debug\edge_laplacian_of_gauss.obj
+         x64\Debug\edge_prewitt.obj
+         x64\Debug\edge_roberts.obj
+         x64\Debug\edge_sobel.obj
+         x64\Debug\edge_zero.obj
+         x64\Debug\edge_zero_dialog.obj
+         x64\Debug\gaussian_dialog.obj
+         x64\Debug\histogram.obj
+         x64\Debug\histogram_equalization.obj
+         x64\Debug\histogram_stretching.obj
+         x64\Debug\histogramviewer.obj
+         x64\Debug\hough.obj
+         x64\Debug\hough_dialog.obj
+         x64\Debug\hough_lines.obj
+         x64\Debug\hough_lines_dialog.obj
+         x64\Debug\hough_rectangles.obj
+         x64\Debug\imageviewer.obj
+         x64\Debug\linear_dialog.obj
+         x64\Debug\main.obj
+         x64\Debug\mainwindow.obj
+         x64\Debug\map_height.obj
+         x64\Debug\map_horizon.obj
+         x64\Debug\map_horizon_dialog.obj
+         x64\Debug\map_normal.obj
+         x64\Debug\map_normal_dialog.obj
+         x64\Debug\mask_dialog.obj
+         x64\Debug\morph_dialog.obj
+         x64\Debug\morph_dilate.obj
+         x64\Debug\morph_erode.obj
+         x64\Debug\morph_openclose.obj
+         x64\Debug\morphological_operator.obj
+         x64\Debug\negative_image.obj
+         x64\Debug\noise_bilateral.obj
+         x64\Debug\noise_bilateral_dialog.obj
+         x64\Debug\noise_median.obj
+         x64\Debug\noise_median_dialog.obj
+         x64\Debug\pnm.obj
+         x64\Debug\segmentation.obj
+         x64\Debug\slider_dialog.obj
+         x64\Debug\tools.obj
+         x64\Debug\toolsmenu.obj
+         x64\Debug\transformation.obj
+         MySimpleGimp.vcxproj -> C:\Users\Marta\Documents\GitHub\Image-Processing\x64\Debug\MySimpleGimp.exe
+     1>Compilación del proyecto terminada "C:\Users\Marta\Documents\GitHub\Image-Processing\MySimpleGimp.vcxproj" (Build destinos).
+
+Compilación correcta.
+
+Tiempo transcurrido 00:00:03.07

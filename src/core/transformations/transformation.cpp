@@ -125,10 +125,16 @@ QRgb Transformation::getPixelCyclic(int x, int y) {
   */
 QRgb Transformation::getPixelNull(int x, int y) {
 	
-	x = x%image->width();
-	y = y%image->height();
+	if (x<0 || y<0 || x>=image->width() || y>=image->height()) {
+	    PNM* newImage = new PNM(1, 1, image->format());
+		QColor newPixel = QColor(0,0,0);
+		newImage->setPixel(0,0, newPixel.rgb());
+		return newImage->pixel(0,0);
+	}
+	else {
+		return image->pixel(x,y);
+	}
 
-	return image->pixel(x,y);
 }
 
 /**
@@ -138,8 +144,26 @@ QRgb Transformation::getPixelNull(int x, int y) {
   */
 QRgb Transformation::getPixelRepeat(int x, int y) {
 
-
-	return image->pixel(x,y);
+	if (x<0 || y<0 || x>=image->width() || y>=image->height()) {
+		int newX=x;
+		int newY=y;
+		if (x<0) {
+			newX=0;
+		}
+		if (y<0) {
+			newY=0;
+		}
+		if (x>=image->width()) {
+			newX=image->width()-1;
+		}
+		if (y>=image->height()) {
+			newY=image->height()-1;
+		}
+		return image->pixel(newX,newY);
+	}
+	else {
+		return image->pixel(x,y);
+	}
 }
 
 /** Returns a size x size part of the image centered around (x,y) */
@@ -150,25 +174,29 @@ math::matrix<double> Transformation::getWindow(int x, int y, int size,
     math::matrix<double> window(size,size);
 
 	int a=0, b=0;
-	for (int i=x-size/2; i<x+size/2; i++) {
+	for (int i=x-size/2; i<=x+size/2; i++) {
 		b=0;
-		for (int j=y-size/2; j<y+size/2; j++) {
+		for (int j=y-size/2; j<=y+size/2; j++) {
 			QRgb pixel;
 			if (i<0 || i>image->width() || j<0 || j>image->height()) {
-				pixel = getPixel(i, j, CyclicEdge);
+				pixel = getPixel(i, j, mode);
 			}
 			else {
 				pixel = image->pixel(x,y); // Getting the pixel(x,y) value
 			}
-			int v;
-			//switch (channel) {
-			//	case RChannel:		v=qRed(pixel);
-			//	case GChannel:		v=qGreen(pixel);
-			//	case BChannel:		v=qBlue(pixel);
-			//	case LChannel:		v=qGray(pixel);
-			//	default:			v=0;
-			//}
-			v=qRed(pixel);
+			int v=0;
+			if (channel==RChannel) {
+				v=qRed(pixel);
+			}
+			if (channel==GChannel) {
+				v=qGreen(pixel);
+			}
+			if (channel==BChannel) {
+				v=qBlue(pixel);
+			}
+			if (channel==LChannel) {
+				v=qGray(pixel);
+			}
 			window(a,b)=v;
 			b++;
 		}
