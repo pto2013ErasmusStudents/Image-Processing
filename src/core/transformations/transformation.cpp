@@ -124,12 +124,10 @@ QRgb Transformation::getPixelCyclic(int x, int y) {
   * If the pixel is out of image boundaries Black is returned;
   */
 QRgb Transformation::getPixelNull(int x, int y) {
-	
+
 	if (x<0 || y<0 || x>=image->width() || y>=image->height()) {
-	    PNM* newImage = new PNM(1, 1, image->format());
 		QColor newPixel = QColor(0,0,0);
-		newImage->setPixel(0,0, newPixel.rgb());
-		return newImage->pixel(0,0);
+		return newPixel.rgb();
 	}
 	else {
 		return image->pixel(x,y);
@@ -182,7 +180,7 @@ math::matrix<double> Transformation::getWindow(int x, int y, int size,
 				pixel = getPixel(i, j, mode);
 			}
 			else {
-				pixel = image->pixel(x,y); // Getting the pixel(x,y) value
+				pixel = image->pixel(i,j); // Getting the pixel(i,j) value
 			}
 			int v=0;
 			if (channel==RChannel) {
