@@ -167,7 +167,7 @@ QRgb Transformation::getPixelRepeat(int x, int y) {
 /** Returns a size x size part of the image centered around (x,y) */
 math::matrix<double> Transformation::getWindow(int x, int y, int size,
                                                Channel channel,
-                                               Mode mode = RepeatEdge)
+                                               Mode mode)
 {
     math::matrix<double> window(size,size);
 
@@ -176,7 +176,7 @@ math::matrix<double> Transformation::getWindow(int x, int y, int size,
 		b=0;
 		for (int j=y-size/2; j<=y+size/2; j++) {
 			QRgb pixel;
-			if (i<0 || i>image->width() || j<0 || j>image->height()) {
+			if (i<0 || i>=image->width() || j<0 || j>=image->height()) {
 				pixel = getPixel(i, j, mode);
 			}
 			else {

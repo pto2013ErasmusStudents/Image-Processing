@@ -18,8 +18,22 @@ PNM* ConversionGrayscale::transform()
 
 	PNM* newImage = new PNM(width, height, QImage::Format_Indexed8);
 
-    if (image->format() == QImage::Format_Mono)
-    {
+    if (image->format() == QImage::Format_Mono) {
+		// Iterate over image space
+		for (int x=0; x<width; x++) {
+			for (int y=0; y<height; y++) {
+				QColor color = QColor::fromRgb(image->pixel(x,y)); // Getting the pixel(x,y) value
+
+				int v;
+				if (color==Qt::white){
+					v=255;
+				}
+				else {
+					v=0;
+				}
+                newImage->setPixel(x,y, v);
+			}
+		}
     }
     else //if (image->format() == QImage::Format_RGB32)
     {
