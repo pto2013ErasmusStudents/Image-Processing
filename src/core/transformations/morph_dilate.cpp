@@ -14,7 +14,17 @@ const int MorphDilate::morph(math::matrix<double> window, math::matrix<bool> se)
 {
     double min = PIXEL_VAL_MAX+1;
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+	int size = window.ColNo();
 
-    return 0;
+	for (int i=0;i<size;i++){
+		for (int j=0;j<size;j++){
+			if (se(i,j)) {
+				if (window(i,j)<min) {
+					min=window(i,j);
+				}
+			}
+		}
+	}
+
+    return min;
 }

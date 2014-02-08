@@ -1,5 +1,6 @@
 #include "map_height.h"
 
+
 MapHeight::MapHeight(PNM* img) :
     Transformation(img)
 {
@@ -17,7 +18,34 @@ PNM* MapHeight::transform()
 
     PNM* newImage = new PNM(width, height, QImage::Format_Indexed8);
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+	if (image->format() == QImage::Format_Mono) {
+		// Iterate over image space
+		for (int x=0; x<width; x++) {
+			for (int y=0; y<height; y++) {
+				QColor color = QColor::fromRgb(image->pixel(x,y)); // Getting the pixel(x,y) value
 
-    return newImage;
+				int v;
+				if (color==Qt::white){
+					v=255;
+				}
+				else {
+					v=0;
+				}
+                newImage->setPixel(x,y, v);
+			}
+		}
+    }
+    else {
+		for (int x=0; x<width; x++) {
+			for (int y=0; y<height; y++) {
+				QRgb pixel = image->pixel(x,y); // Getting the pixel(x,y) value
+
+				int v = 0.3*qRed(pixel)+0.6*qGreen(pixel)+0.1*qBlue(pixel);    // Get the 0-255 value of the L channel
+				
+				newImage->setPixel(x,y, v);
+			}
+		}
+	}
+
+	return newImage;
 }

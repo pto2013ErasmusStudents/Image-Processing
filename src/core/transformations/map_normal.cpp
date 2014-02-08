@@ -22,7 +22,21 @@ PNM* MapNormal::transform()
 
     PNM* newImage = new PNM(width, height, image->format());
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+	//MapHeight map = MapHeight::MapHeight(image);
+	//newImage = map.transform;
+
+	//math::matrix<double>* G_x = new  math::matrix<double>(this->image->width(), this->image->height());
+	//EdgeSobel edge = EdgeSobel::EdgeSobel(image);
+	//G_x = edge.rawHorizontalDetection;
+	//math::matrix<double>* G_y = new  math::matrix<double>(this->image->width(), this->image->height());
+	//G_y = edge.rawVerticalDetection;
+
+	//for (int i=0; i<width;i++) {
+	//	for (int j=0; j<height;j++) {
+
+	//		double dZ = 1/strength;
+	//	}
+	//}
 
     return newImage;
 }

@@ -37,8 +37,8 @@ math::matrix<double> BlurGaussian::getMask(int size, Mode)
 double BlurGaussian::getGauss(int x, int y, double sigma)
 {    
 
-	double pi=3.1415;
-	double value = (1/(2*pi*sigma*sigma))*exp((x^2+y^2)/(2*sigma*sigma));
+	double pi=3.14159;
+	double value = (1/(2*pi*sigma*sigma))*exp(-(x^2+y^2)/(2*sigma*sigma));
 
 
     return value;

@@ -23,7 +23,64 @@ PNM* EdgeZeroCrossing::transform()
 
     PNM* newImage = new PNM(width, height, QImage::Format_Indexed8);
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
+	EdgeLaplaceOfGauss::EdgeLaplaceOfGauss(image);
+    int v_0=128;
+
+	if (image->format() == QImage::Format_Mono) {
+	}
+	else if (image->format() == QImage::Format_Indexed8) {
+		// Iterate over image space
+		for (int x=0; x<image->width(); x++) {
+			for (int y=0; y<image->height(); y++) {
+				math::matrix<double> window(size,size);
+				window=getMask(size, RepeatEdge);
+				int min=PIXEL_VAL_MAX+1, max=0;
+				for (int i=0;i<size;i++) {
+					for (int j=0;j<size;j++) {
+						if (window(i,j)>max) {
+							max = window(i,j);
+						}
+						if (window(i,j)<min) {
+							min = window(i,j);
+						}
+					}
+				}
+				if (min<(v_0-t) && max>(v_0+t)) {
+					QRgb pixel = image->pixel(x,y);
+	                newImage->setPixel(x,y, pixel);
+				}
+				else {
+					newImage->setPixel(x,y, 0);
+				}
+			}
+		}
+	}
+	else { //if (image->format() == QImage::Format_RGB32)
+		for (int x=0; x<image->width(); x++) {
+			for (int y=0; y<image->height(); y++){
+				math::matrix<double> window(size,size);
+				window=getMask(size, RepeatEdge);
+				int min=255, max=0;
+				for (int i=0;i<size;i++) {
+					for (int j=0;j<size;j++) {
+						if (window(i,j)>max) {
+							max = window(i,j);
+						}
+						if (window(i,j)<min) {
+							min = window(i,j);
+						}
+					}
+				}
+				if (min<(v_0-t) && max>(v_0+t)) {
+					QRgb pixel = image->pixel(x,y);
+	                newImage->setPixel(x,y, pixel);
+				}
+				else {
+					newImage->setPixel(x,y, 0);
+				}
+			}
+		}
+	}
 
     return newImage;
 }

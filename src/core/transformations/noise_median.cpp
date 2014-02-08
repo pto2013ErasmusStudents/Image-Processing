@@ -23,7 +23,7 @@ PNM* NoiseMedian::transform()
 		// Iterate over image space
 		for (int x=0; x<width; x++) {
 			for (int y=0; y<height; y++) {
-                int v = getMedian(x, y, LChannel);    // Get the 0-255 value of the L channel
+				int v = getMedian(x, y, LChannel);    // Get the 0-255 value of the L channel
 				
 				newImage->setPixel(x,y, v);
             }
@@ -64,13 +64,7 @@ int NoiseMedian::getMedian(int x, int y, Channel channel)
 	for (int i=x-size/2; i<=x+size/2; i++) {
 		b=0;
 		for (int j=y-size/2; j<=y+size/2; j++) {
-			QRgb pixel;
-			if (i<0 || i>image->width() || j<0 || j>image->height()) {
-				pixel = 0;
-			}
-			else {
-				pixel = image->pixel(i,j); // Getting the pixel(x,y) value
-			}
+			QRgb pixel= getPixel(i, j, RepeatEdge);
 			int v=0;
 			if (channel==RChannel) {
 				v=qRed(pixel);

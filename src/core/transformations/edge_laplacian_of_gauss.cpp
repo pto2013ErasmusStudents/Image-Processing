@@ -19,16 +19,21 @@ math::matrix<double> EdgeLaplaceOfGauss::getMask(int, Mode)
 
     math::matrix<double> mask(size, size);
 
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
-
-    return mask;
+	for (int i=0;i<size;i++) {
+		int x=i-(size/2);
+		for (int j=0;j<size;j++) {
+			int y=j-(size/2);
+			mask(i,j) = getLoG(x, y, sigma);
+		}
+	}
+	
+	return mask;
 }
 
 double EdgeLaplaceOfGauss::getLoG(int x, int y, double s)
 {
-    qDebug() << Q_FUNC_INFO << "Not implemented yet!";
 
-    return 0;
+    return ((pow(x,2)+pow(y,2))/pow(s,2) - 2/pow(s,2))*BlurGaussian::getGauss(x,y,s);
 }
 
 int EdgeLaplaceOfGauss::getSize()
