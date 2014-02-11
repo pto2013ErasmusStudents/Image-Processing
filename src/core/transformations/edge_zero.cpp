@@ -23,7 +23,12 @@ PNM* EdgeZeroCrossing::transform()
 
     PNM* newImage = new PNM(width, height, QImage::Format_Indexed8);
 
-	EdgeLaplaceOfGauss::EdgeLaplaceOfGauss(image);
+	EdgeLaplaceOfGauss logTrans(image, getSupervisor());
+	logTrans.setParameter("size",  getParameter("size"));
+	logTrans.setParameter("sigma", getParameter("sigma"));
+	
+	PNM* logImage = logTrans.transform();
+
     int v_0=128;
 
 	if (image->format() == QImage::Format_Mono) {
@@ -32,8 +37,9 @@ PNM* EdgeZeroCrossing::transform()
 		// Iterate over image space
 		for (int x=0; x<image->width(); x++) {
 			for (int y=0; y<image->height(); y++) {
-				math::matrix<double> window(size,size);
-				window=getMask(size, RepeatEdge);
+
+				math::matrix<double> window = logTrans.getWindow(x,y,size,Transformation::LChannel, Transformation::RepeatEdge);
+
 				int min=PIXEL_VAL_MAX+1, max=0;
 				for (int i=0;i<size;i++) {
 					for (int j=0;j<size;j++) {
@@ -46,8 +52,7 @@ PNM* EdgeZeroCrossing::transform()
 					}
 				}
 				if (min<(v_0-t) && max>(v_0+t)) {
-					QRgb pixel = image->pixel(x,y);
-	                newImage->setPixel(x,y, pixel);
+	                newImage->setPixel(x,y, qGray(logImage->pixel(x,y)));
 				}
 				else {
 					newImage->setPixel(x,y, 0);
@@ -58,8 +63,9 @@ PNM* EdgeZeroCrossing::transform()
 	else { //if (image->format() == QImage::Format_RGB32)
 		for (int x=0; x<image->width(); x++) {
 			for (int y=0; y<image->height(); y++){
-				math::matrix<double> window(size,size);
-				window=getMask(size, RepeatEdge);
+
+				math::matrix<double> window = logTrans.getWindow(x,y,size,Transformation::LChannel, Transformation::RepeatEdge);
+
 				int min=255, max=0;
 				for (int i=0;i<size;i++) {
 					for (int j=0;j<size;j++) {
@@ -72,8 +78,7 @@ PNM* EdgeZeroCrossing::transform()
 					}
 				}
 				if (min<(v_0-t) && max>(v_0+t)) {
-					QRgb pixel = image->pixel(x,y);
-	                newImage->setPixel(x,y, pixel);
+	                newImage->setPixel(x,y, qGray(logImage->pixel(x,y)));
 				}
 				else {
 					newImage->setPixel(x,y, 0);

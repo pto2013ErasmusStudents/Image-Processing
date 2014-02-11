@@ -59,25 +59,15 @@ int NoiseBilateral::getNeighbours(int x, int y, Channel channel)
 
 	for (int i=x-size/2; i<=x+size/2; i++) {
 		for (int j=y-size/2; j<=y+size/2; j++) {
-			double valG;
-			double kernels = g(i, j, sigma_d)*r(val, 0, sigma_r);
 
-			int v=0;
-			QRgb pixel= getPixel(i, j, RepeatEdge);
-			if (channel==RChannel) {
-				v=qRed(pixel);
+			math::matrix<double> mask = getWindow(x, y, size, channel, RepeatEdge);
+			for (int i=-size/2; i<=size/2; i++) {
+				for (int j=-size/2; j<=size/2; j++) {
+					double kernels = g(i, j, sigma_d)*r(mask(radius,radius), mask(i+size/2,j+size/2), sigma_r);
+					val += mask(i+size/2,j+size/2) * kernels;
+					k += kernels;
+				}
 			}
-			if (channel==GChannel) {
-				v=qGreen(pixel);
-			}
-			if (channel==BChannel) {
-				v=qBlue(pixel);
-			}
-			if (channel==LChannel) {
-				v=qGray(pixel);
-			}
-			val+=v*kernels;
-			k+=kernels;
 		}
 	}    
 
@@ -87,20 +77,11 @@ int NoiseBilateral::getNeighbours(int x, int y, Channel channel)
 double NoiseBilateral::g(int x, int y, int sigma_d)
 {
 
-	double pi=3.14159;
-	double expo = exp(-(pow(x,2) + pow(y,2))/(2*(pow(sigma_d,2))));
-	double val1 = (1/(2*pi*(pow(sigma_d,2)))); 
-	double val = val1*expo;
-
-    return val;
+    return exp(-((pow(x,2)+pow(y,2))/(2*pow(sigma_d,2))));
 }
 
 double NoiseBilateral::r(int v, int v_ij, int sigma_r)
 {
-	double pi=3.14159;
-	int x=v_ij-v;
 
-	double val = (1/(sigma_r*sqrt(2*pi)))*exp(-(pow(x,2))/(2*pow(sigma_r,2)));
-
-    return val;
+    return exp(-((pow(v_ij-v,2))/(2*pow(sigma_r,2))));
 }

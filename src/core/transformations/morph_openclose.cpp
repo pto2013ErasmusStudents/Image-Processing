@@ -23,16 +23,17 @@ PNM* MorphOpenClose::transform()
 	PNM* newImage2 = new PNM(image->width(), image->height(), QImage::Format_RGB32);
 	
 	//switch (m_type) {
-	//	case Open: newImage = dilate(image, size, shape);
-	//	case Close: newImage = erode(image, size, shape);
-	//	default: newImage = erode(image, size, shape);
+	//	case Open: {
+	//		newImage = dilate(image, size, shape);
+	//		newImage2 = erode(newImage, size, shape);
+	//	}
+	//	case Close: {
+	//		newImage = erode(image, size, shape);
+	//		newImage2 = dilate(newImage, size, shape);
+	//	}
+	//	default:;
 	//}
 
-	//switch (m_type) {
-	//	case Open:	newImage2 = erode(newImage, size, shape);
-	//	case Close:	newImage2 = dilate(newImage, size, shape);
-	//	default: newImage2 = dilate(newImage, size, shape);
-	//}
 
 	if (m_type==Open) {
 		newImage = erode(image, size, shape);

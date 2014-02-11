@@ -62,9 +62,9 @@ PNM* Convolution::convolute(math::matrix<double> mask, Mode mode = RepeatEdge)
 				if (weight!=0) {
 					sumAc/=weight;
 				}
-				if (sumAc >= 0 && sumAc <=255) {
-					l = sumAc;
-				}
+				l = sumAc;
+				l = (l>PIXEL_VAL_MAX ? PIXEL_VAL_MAX : l);
+				l = (l<PIXEL_VAL_MIN ? PIXEL_VAL_MIN : l);
 
 				newImage->setPixel(x,y, l);
 
@@ -80,9 +80,9 @@ PNM* Convolution::convolute(math::matrix<double> mask, Mode mode = RepeatEdge)
 				int size = mask.RowNo();
 			
 				QRgb pixel = image->pixel(x,y); // Getting the pixel(x,y) value
-				int r = qRed(pixel);    // Get the 0-255 value of the R channel
-				int g = qGreen(pixel);  // Get the 0-255 value of the G channel
-				int b = qBlue(pixel);   // Get the 0-255 value of the B channel
+				int r;    // Get the 0-255 value of the R channel
+				int g;  // Get the 0-255 value of the G channel
+				int b;   // Get the 0-255 value of the B channel
 
 				math::matrix<double> window = Transformation::getWindow(x,y, size, RChannel, mode);
 				math::matrix<double> accumulator = join(window, mask);
@@ -90,9 +90,9 @@ PNM* Convolution::convolute(math::matrix<double> mask, Mode mode = RepeatEdge)
 				if (weight!=0) {
 					sumAc/=weight;
 				}
-				if (sumAc >= 0 && sumAc <=255) {
-					r = sumAc;
-				}
+				r = sumAc;
+				r = (r>PIXEL_VAL_MAX ? PIXEL_VAL_MAX : r);
+				r = (r<PIXEL_VAL_MIN ? PIXEL_VAL_MIN : r);
 
 				window = Transformation::getWindow(x,y, size, GChannel, mode);
 				accumulator = join(window, mask);
@@ -100,9 +100,9 @@ PNM* Convolution::convolute(math::matrix<double> mask, Mode mode = RepeatEdge)
 				if (weight!=0) {
 					sumAc/=weight;
 				}
-				if (sumAc >= 0 && sumAc <=255) {
-					g = sumAc;
-				}
+				g = sumAc;
+				g = (g>PIXEL_VAL_MAX ? PIXEL_VAL_MAX : g);
+				g = (g<PIXEL_VAL_MIN ? PIXEL_VAL_MIN : g);
 
 				window = Transformation::getWindow(x,y, size, BChannel, mode);
 				accumulator = join(window, mask);
@@ -110,9 +110,9 @@ PNM* Convolution::convolute(math::matrix<double> mask, Mode mode = RepeatEdge)
 				if (weight!=0) {
 					sumAc/=weight;
 				}
-				if (sumAc >= 0 && sumAc <=255) {
-					b = sumAc;
-				}
+				b = sumAc;
+				b = (b>PIXEL_VAL_MAX ? PIXEL_VAL_MAX : b);
+				b = (b<PIXEL_VAL_MIN ? PIXEL_VAL_MIN : b);
 
 				QColor newPixel = QColor(r,g,b);
 				newImage->setPixel(x,y, newPixel.rgb());
