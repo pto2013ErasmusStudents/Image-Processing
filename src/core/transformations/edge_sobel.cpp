@@ -45,11 +45,10 @@ math::matrix<double>* EdgeSobel::rawHorizontalDetection()
 
     for (int i=0;i<size;i++) {
 		for (int j=0;j>size;j++) {
-			math::matrix<double> window(size, size);
-			window = getWindow(i,j,size,LChannel,RepeatEdge);
+			math::matrix<double> window = getWindow(i,j,3,LChannel,RepeatEdge);
 			math::matrix<double> newWindow = join(g_x,window);
-			int suma=sum(newWindow);
-			*x_gradient =suma;
+			double suma=sum(newWindow);
+			(*x_gradient)(i,j) =suma;
 		}
 	}
 
@@ -64,11 +63,10 @@ math::matrix<double>* EdgeSobel::rawVerticalDetection()
 
     for (int i=0;i<size;i++) {
 		for (int j=0;j>size;j++) {
-			math::matrix<double> window(size, size);
-			window = getWindow(i,j,size,LChannel,RepeatEdge);
+			math::matrix<double> window = getWindow(i,j,3,LChannel,RepeatEdge);
 			math::matrix<double> newWindow = join(g_y,window);
-			int suma=sum(newWindow);
-			*y_gradient =suma;
+			double suma=sum(newWindow);
+			(*y_gradient)(i,j) =suma;
 		}
 	}
 

@@ -351,7 +351,7 @@ void Tools::morphOpen()
     MorphOpenClose* mo = new MorphOpenClose(iv->getImage(), iv);
     mo->setParameter("size",  dialog.getSize());
     mo->setParameter("shape", (int)dialog.getShape());
-    mo->setProperty("type", (int)MorphOpenClose::Open);
+    mo->setParameter("type", (int)MorphOpenClose::Open);
     mo->start();
 }
 
@@ -373,7 +373,7 @@ void Tools::morphClose()
     MorphOpenClose* mc = new MorphOpenClose(iv->getImage(), iv);
     mc->setParameter("size",  dialog.getSize());
     mc->setParameter("shape", (int)dialog.getShape());
-    mc->setProperty("type", (int)MorphOpenClose::Close);
+    mc->setParameter("type", (int)MorphOpenClose::Close);
     mc->start();
 }
 

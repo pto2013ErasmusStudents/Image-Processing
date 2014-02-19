@@ -22,21 +22,31 @@ PNM* MapNormal::transform()
 
     PNM* newImage = new PNM(width, height, image->format());
 
-	//MapHeight map = MapHeight::MapHeight(image);
-	//newImage = map.transform;
+	PNM* heightImage = MapHeight(image).transform();
 
-	//math::matrix<double>* G_x = new  math::matrix<double>(this->image->width(), this->image->height());
-	//EdgeSobel edge = EdgeSobel::EdgeSobel(image);
-	//G_x = edge.rawHorizontalDetection;
-	//math::matrix<double>* G_y = new  math::matrix<double>(this->image->width(), this->image->height());
-	//G_y = edge.rawVerticalDetection;
+	math::matrix<double>* G_x = EdgeSobel(heightImage).rawHorizontalDetection();
+	math::matrix<double>* G_y = EdgeSobel(heightImage).rawVerticalDetection();
 
-	//for (int i=0; i<width;i++) {
-	//	for (int j=0; j<height;j++) {
+	for (int i=0; i<width;i++) {
+		for (int j=0; j<height;j++) {
+			double gx = (*G_x)(i,j);
+			double gy = (*G_y)(i,j);
+			double dX = gx/255;
+			double dY = gy/255;
+			double dZ = 1/strength;
+			double length = sqrt(pow(dX,2)+pow(dY,2)+pow(dZ,2));
+			dX/=length;
+			dY/=length;
+			dZ/=length;
+			double r = (dX + 1.0)*(255/strength);
+			double g = (dY + 1.0)*(255/strength);
+			double b = (dZ + 1.0)*(255/strength);
+			
+			QColor newPixel = QColor(r,g,b);
+			newImage->setPixel(i,j, newPixel.rgb());
 
-	//		double dZ = 1/strength;
-	//	}
-	//}
+		}
+	}
 
     return newImage;
 }

@@ -1,4 +1,5 @@
 #include "map_height.h"
+#include "conversion_grayscale.h"
 
 
 MapHeight::MapHeight(PNM* img) :
@@ -17,6 +18,9 @@ PNM* MapHeight::transform()
         height = image->height();
 
     PNM* newImage = new PNM(width, height, QImage::Format_Indexed8);
+	
+	//ConversionGrayscale conversion = ConversionGrayscale::ConversionGrayscale(image);
+	//newImage = ConversionGrayscale::transform();
 
 	if (image->format() == QImage::Format_Mono) {
 		// Iterate over image space
