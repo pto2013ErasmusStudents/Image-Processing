@@ -43,8 +43,8 @@ math::matrix<double>* EdgeSobel::rawHorizontalDetection()
 
 	int size = this->image->width();
 
-    for (int i=0;i<size;i++) {
-		for (int j=0;j>size;j++) {
+	for (int i=0; i<image->width(); i++) {
+		for (int j=0; j<image->height(); j++){
 			math::matrix<double> window = getWindow(i,j,3,LChannel,RepeatEdge);
 			math::matrix<double> newWindow = join(g_x,window);
 			double suma=sum(newWindow);
@@ -61,8 +61,8 @@ math::matrix<double>* EdgeSobel::rawVerticalDetection()
 
 	int size = this->image->width();
 
-    for (int i=0;i<size;i++) {
-		for (int j=0;j>size;j++) {
+	for (int i=0; i<image->width(); i++) {
+		for (int j=0; j<image->height(); j++){
 			math::matrix<double> window = getWindow(i,j,3,LChannel,RepeatEdge);
 			math::matrix<double> newWindow = join(g_y,window);
 			double suma=sum(newWindow);
